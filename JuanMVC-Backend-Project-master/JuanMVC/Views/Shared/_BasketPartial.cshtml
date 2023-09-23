@@ -1,0 +1,53 @@
+﻿@using JuanMVC.ViewModels
+
+@model BasketVM
+
+
+
+ <div class="minicart-content-box">
+        <div class="minicart-item-wrapper">
+            
+            <ul id="basketItems" data-count="@Model.Items.Count">
+
+                @foreach (var item in Model.Items)
+                {
+                    <li class="minicart-item">
+                        <div class="minicart-thumb">
+                            <a href="product-details.html">
+                                <img src="~/manage/assets/uploads/products/@item.Product.Images.FirstOrDefault(x=>x.ImageStatus==true)?.ImageName" alt="product" />
+                            </a>
+                        </div>
+                        <div class="minicart-content">
+                            <h3 class="product-name">
+                                <a href="product-details.html">@item.Product.Name</a>
+                            </h3>
+                            <p>
+                                <span class="cart-quantity">@item.Count <strong>&times;</strong></span>
+                                <span class="cart-price">$@(item.Product.DiscountedPrice>0?(int)item.Product.DiscountedPrice:(int)item.Product.SalePrice)</span>
+                            </p>
+                        </div>
+                        <a asp-action="DeleteBasket" asp-controller="product" asp-route-id="@item.Product.Id" class="minicart-remove  delete-basket-btn">
+                            <i class="ion-android-close"></i>
+                        </a>
+                    </li>
+
+                }
+
+            </ul>
+        </div>
+
+        <div class="minicart-pricing-box">
+            <ul>
+               
+                <li class="total">
+                    <span>total</span>
+                    <span><strong>$@Model.TotalAmount.ToString("0.00")</strong></span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="minicart-button">
+            <a asp-action="index" asp-controller="basket"><i class="fa fa-shopping-cart"></i> view cart</a>
+            <a asp-action="checkout" asp-controller="order" ><i class="fa fa-share"></i> checkout</a>
+        </div>
+    </div>

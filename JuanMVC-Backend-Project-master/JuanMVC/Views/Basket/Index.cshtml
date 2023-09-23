@@ -1,0 +1,91 @@
+﻿@using JuanMVC.ViewModels
+
+@model BasketVM
+
+
+ <!-- main wrapper start -->
+    <main>
+        <!-- breadcrumb area start -->
+        <div class="breadcrumb-area bg-img" data-bg="assets/img/banner/breadcrumb-banner.jpg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="breadcrumb-wrap text-center">
+                            <nav aria-label="breadcrumb">
+                                <h1 class="breadcrumb-title">Cart</h1>
+                                <ul class="breadcrumb">
+                                    <li class="breadcrumb-item"><a  asp-action="index" asp-controller="home" >Home</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Cart</li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- breadcrumb area end -->
+
+        <!-- cart main wrapper start -->
+        <div class="cart-main-wrapper section-padding">
+            <div class="container">
+                <div class="section-bg-color">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <!-- Cart Table Area -->
+                            <div class="cart-table table-responsive">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th class="pro-thumbnail">Thumbnail</th>
+                                            <th class="pro-title">Product</th>
+                                            <th class="pro-price">Price</th>
+                                            <th class="pro-quantity">Quantity</th>
+                                            <th class="pro-subtotal">Total</th>
+                                        </tr>
+                                    </thead>
+
+                                <tbody>
+                                    @foreach (var item in Model.Items)
+                                    {
+
+                                        <tr>
+                                            <td class="pro-thumbnail"><a href="#"><img class="img-fluid" src="~/manage/assets/uploads/products/@item.Product.Images.FirstOrDefault(x=>x.ImageStatus==true)?.ImageName" alt="Product" /></a></td>
+                                            <td class="pro-title"><a href="#">@item.Product.Name</a></td>
+                                            <td class="pro-price"><span>$@(item.Product.DiscountedPrice>0 ? (int)item.Product.DiscountedPrice : (int)item.Product.SalePrice)</span></td>
+                                             <td><span>@item.Count</span></td>
+                                            <td class="pro-subtotal"><span>$@((int)(item.Product.DiscountedPrice>0? item.Product.DiscountedPrice : item.Product.SalePrice) *item.Count )</span></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                </table>
+                            </div>
+                            <!-- Cart Update Option -->
+                           
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-5 ml-auto">
+                            <!-- Cart Calculation Area -->
+                            <div class="cart-calculator-wrapper">
+                                <div class="cart-calculate-items">
+                                    <h3>Cart Totals</h3>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                         
+                                            <tr class="total">
+                                                <td>Total</td>
+                                                <td class="total-amount">$@Model.TotalAmount.ToString("0.00")</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <a asp-action="checkout" asp-controller="order" class="btn d-block">Proceed Checkout</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- cart main wrapper end -->
+    </main>
+    <!-- main wrapper end -->
